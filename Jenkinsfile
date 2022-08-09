@@ -2,18 +2,17 @@
 //declarative pipiline
 
 pipeline  {
-
-	agent any{
+       agent any
+	 {
 		stages
 		{
-             stage('Build')
-		    {
+                      stage('Build')
+		       {
 		        steps {
                       echo "Build"
-                       					
-				}
-			 }
-			stage('Test')	
+                       	      }
+			}
+		      stage('Test')	
 			{steps {
                       
                        echo "Test"
@@ -22,9 +21,10 @@ pipeline  {
 			}
 				
 			stage('IntegrationTest')
-			{steps {
-                      
-					   echo "IntegrationTest"					
+			{
+				steps 
+			       {
+                      	        echo "IntegrationTest"					
 				}
 		    }
 
