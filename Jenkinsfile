@@ -1,23 +1,24 @@
 
-//declarative pipiline
+pipeline 
 
-pipeline  {
+    {
        agent any
-	 {
-		stages
+	   stages
 		{
-                      stage('Build')
+                   stage('Build')
 		       {
 		        steps {
                       echo "Build"
                        	      }
 			}
 		      stage('Test')	
-			{steps {
+			{
+			steps 
+			{
                       
                        echo "Test"
 					   				
-				}
+			 }
 			}
 				
 			stage('IntegrationTest')
@@ -26,12 +27,7 @@ pipeline  {
 			       {
                       	        echo "IntegrationTest"					
 				}
-		    }
+		         }
 
-				
-		}
-        
-    
-	
+		 }
     }
-}
