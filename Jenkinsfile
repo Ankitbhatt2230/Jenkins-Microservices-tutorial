@@ -81,7 +81,7 @@ stage('docker push image')
 {
 	steps{
 		docker.withRegistry("",'dockerhub'){
-		dockerImage.push();
+		dockerImage.push()
 		dockerImage.push('latest')
 		}
 		
