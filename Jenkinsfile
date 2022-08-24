@@ -1,21 +1,23 @@
 
 //declarative pipeline
 
-pipeline  {
+pipeline  
+{
 
 	agent any
-        environment{
+        environment
+		{
 			dockerhome= tool 'myDocker'
 			mavenHome= tool 'myMaven'
 			PATH= "$dockerHome/bin:$mavenHome/bin:PATH"
 		}
 
-	stages
+		stages
 		{
 
-		stage ('checkout') 
+			stage ('checkout') 
 			{
-                           steps{
+            steps{
 				sh 'mvn --version'
 				sh 'docker version'
 				echo "Build"
@@ -24,31 +26,33 @@ pipeline  {
 				echo "BUILD_ID - $env.BUILD_ID"
 				echo "JOB_NAME - $env.JOB_NAME"
 				echo "BUILD_TAG - $env.BUILD_TAG"
-			        echo "BUILD_URL - $env.BUILD_URL"
-				}
+			echo "BUILD_URL - $env.BUILD_URL"
+					
 			}
-		stage ('compile')
+			stage ('compile')
 			{
 				steps{
 					sh 'mvn clean compile'
 				}
 			}
 
-               stage('Build')
+			}
+             stage('Build')
 		    {
 		        steps {
                       echo "Build"
-                       	      }
-		    }
-		stage('Test')	
-                    { steps 
-		        {
-                                           sh "mvn test"
+                       					
+				}
+			 }
+			stage('Test')	
+			{ steps {
+                      
+                       sh "mvn test"
 					   				
+				}
 			}
-		    }
 				
-		stage('IntegrationTest')
+			stage('IntegrationTest')
 			{steps {
                       
 					   //echo "IntegrationTest"					
@@ -63,30 +67,28 @@ pipeline  {
 				}
 		    }
 
-
-
-stage ('Build Docker Image')
-{
-	steps{
+            stage ('Build Docker Image')
+            {
+	         steps{
 		//docker build -t ankitbhatt2230/my-first-docker-repo:$env.BUILD_TAG
-		script{
-			docker.build("ankitbhatt2230/my-first-docker-repo.${env.BUILD_TAG}")
-		}
+		     script{
+			      docker.build("ankitbhatt2230/my-first-docker-repo.${env.BUILD_TAG}")
+		           }
 
-	}
-
-stage('docker push image')
-{
-	steps{
-		docker.withRegistry("",'dockerhub')
-		{
-		dockerImage.push()
-		dockerImage.push('latest')
-		}
+	              }
+            }     
+           stage('docker push image')
+           {
+	         steps{
+		       docker.withRegistry("",'dockerhub')
+			   {
+		       dockerImage.push();
+		        dockerImage.push('latest')
+		        }
 		
-}
-}
-}
+	             }
+		   }
 		}
 
+}
 
