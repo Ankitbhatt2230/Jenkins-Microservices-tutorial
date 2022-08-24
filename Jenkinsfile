@@ -17,7 +17,7 @@ pipeline
 
 			stage ('checkout') 
 			{
-            steps{
+             steps{
 				sh 'mvn --version'
 				sh 'docker version'
 				echo "Build"
@@ -28,10 +28,10 @@ pipeline
 				echo "BUILD_TAG - $env.BUILD_TAG"
 			echo "BUILD_URL - $env.BUILD_URL"
 					
-			}
+			  }
 			stage ('compile')
 			{
-				steps{
+ 				steps{
 					sh 'mvn clean compile'
 				}
 			}
@@ -80,9 +80,9 @@ pipeline
            stage('docker push image')
            {
 	         steps{
-		       docker.withRegistry("",'dockerhub')
-			   {
-		       dockerImage.push();
+		       script{
+				docker.withRegistry("",'dockerhub')			   
+		        dockerImage.push();
 		        dockerImage.push('latest')
 		        }
 		
